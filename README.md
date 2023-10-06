@@ -3,8 +3,8 @@
 
 ## Integrantes 
 Nicolas Moreyra,
-Jonathan Murray y
-Juan Paredes
+Jonathan Murray
+y Juan Paredes
 
 
 ## Proyecto: Contador binario.
