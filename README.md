@@ -2,8 +2,8 @@
 
 
 ## Integrantes 
-Nicolas Moreyra
-Jonathan Murray
+Nicolas Moreyra,
+Jonathan Murray y
 Juan Paredes
 
 
