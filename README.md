@@ -8,46 +8,42 @@ Juan Paredes
 
 
 ## Proyecto: Contador binario.
-![Tinkercad](./img/ContadorBinario.png)
+Contador de 0 a 99 con Display 7 Segmentos y Multiplexación
+![Tinkercad](./img/ContadorBinario.jpg)
 
 
 ## Descripción
-En este parrafo deberan describir que funcion cumple su proyecto. Que solucion esta ofreciendo.
-
-## Función principal
-Esta funcion se encarga de encender y apagar los leds.
-
-B0, B1, B2, B3 son #define que utilizamos para agregar los leds, asociandolo a pines de la placa arduino.
-
-(Breve explicación de la función)
-
-~~~ C (lenguaje en el que esta escrito)
-void EncenderBinario(int estado3, int estado2,int estado1,int estado0)
-{
-  digitalWrite(B3,estado3);
-  digitalWrite(B2,estado2);
-  digitalWrite(B1,estado1);
-  digitalWrite(B0,estado0);
-}
-~~~
-
-## :robot: Link al proyecto
-- [proyecto]([https://www.tinkercad.com/things/aOYiibnDjWu](https://www.tinkercad.com/things/5VHksmppiuX-tp-arduino/editel?sharecode=n8TuBJ3y4hrLe55Fuz5TQoZ8hr-rgARAx6vKpvNjIIA))
-## :tv: Link al video del proceso
-- [video](https://www.youtube.com/watch?v=VyGjE8kx-O0)
-
----
-### Fuentes
-- [Consejos para documentar](https://www.sohamkamani.com/how-to-write-good-documentation/#architecture-documentation).
-
-- [Lenguaje Markdown](https://markdown.es/sintaxis-markdown/#linkauto).
-
-- [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
-
-- [Tutorial](https://www.youtube.com/watch?v=oxaH9CFpeEE).
-
-- [Emojis](https://gist.github.com/rxaviers/7360908).
-
----
+Contador de 0 a 99 utilizando dos displays de 7 segmentos y tres botones para
+controlar la cuenta. Se utiliza técnica de multiplexación para mostrar los dígitos
+en los displays. 
 
 
+Función Principal:
+	Mediante la técnica de multiplexación podemos reutilizar los pines que alimentan un display (7 a 11), para alimentar también otro display.
+Cuando enviamos la información desde los pins 7-11 (dependiendo del digito que queramos formar) para imprimir el digito en el display de unidades, debemos enviar un “0” desde A4 al COMMON de DisplayUnidad, y un “1” desde A5 al COMMON de DisplayDecena (generando la diferencia de potencial que activara los segmentos del display). Y al revés, para que se imprima en el display de las decenas. Se ajustan los delays en las funciones correspondientes para que sea imperceptible a la vista y de la sensación de que ambos están prendidos a la vez.
+Se implementarán contadores que lleven la cuenta, a medida que se presionen los botones de incremento de cuenta (ButtomUp), de decrecimiento (ButtomDown), y un botón de reseteo (ButtomReset) que vuelve la cuenta a 0.
+FUNCIONES PRINCIPALES DEL CODIGO:
+void loop()
+// Control de los pulsadores y contadores.
+// Recibe: Toma los datos de la función "ControladorPulsadores". Incrementará/disminuirá/reseteará contadores.
+// Devuelve: Dato del contador para la función ControlUnidadDecena
+*para más detalle revisar código comentado línea por linea
+ControladorPulsadores()
+// FUNCION CONTROL DE PULSADORES 
+// Recibe: Lees el estado de los pulsadores
+// Devuelve: Identifica que pulsador se presionó, para ser procesados en el loop
+*para más detalle revisar código comentado línea por linea
+ControlUnidadDecena()
+// FUNCION CONTROL DE UNIDAD Y DECENAS
+// Procesa el dato del contador, para que sea proyectado en los displays
+// Dispara los pulsos para el multiplexado
+*para más detalle revisar código comentado línea por linea
+ControladorMultiplexado()
+//FUNCION CONTROLADORA DE MULTIPLEXADO
+// Se encarga del multiplexado
+// Controla los tiempos de encendido de los display, alternando sus encendidos con un tiempo de delay bajo para que sea imperceptible.
+*para más detalle revisar código comentado línea por linea
+ControladorDisplay()
+// FUNCION CONTROLADOR DE DISPLAYS
+// Control de encendido de cada segmento que imprime el digito deseado.
+*para más detalle revisar código comentado línea por linea
