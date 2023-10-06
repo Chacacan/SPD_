@@ -19,9 +19,15 @@ en los displays.
 
 
 Función Principal:
-	Mediante la técnica de multiplexación podemos reutilizar los pines que alimentan un display (7 a 11), para alimentar también otro display.
-Cuando enviamos la información desde los pins 7-11 (dependiendo del digito que queramos formar) para imprimir el digito en el display de unidades, debemos enviar un “0” desde A4 al COMMON de DisplayUnidad, y un “1” desde A5 al COMMON de DisplayDecena (generando la diferencia de potencial que activara los segmentos del display). Y al revés, para que se imprima en el display de las decenas. Se ajustan los delays en las funciones correspondientes para que sea imperceptible a la vista y de la sensación de que ambos están prendidos a la vez.
-Se implementarán contadores que lleven la cuenta, a medida que se presionen los botones de incremento de cuenta (ButtomUp), de decrecimiento (ButtomDown), y un botón de reseteo (ButtomReset) que vuelve la cuenta a 0.
+	Mediante la técnica de multiplexación podemos reutilizar los pines que alimentan un display (7 a 11), 
+ para alimentar también otro display.
+Cuando enviamos la información desde los pins 7-11 (dependiendo del digito que queramos formar)
+para imprimir el digito en el display de unidades, debemos enviar un “0” desde A4 al COMMON de DisplayUnidad,
+y un “1” desde A5 al COMMON de DisplayDecena (generando la diferencia de potencial que activara los segmentos
+del display). Y al revés, para que se imprima en el display de las decenas. Se ajustan los delays en las funciones 
+correspondientes para que sea imperceptible a la vista y de la sensación de que ambos están prendidos a la vez.
+Se implementarán contadores que lleven la cuenta, a medida que se presionen los botones de incremento de cuenta 
+(ButtomUp), de decrecimiento (ButtomDown), y un botón de reseteo (ButtomReset) que vuelve la cuenta a 0.
 FUNCIONES PRINCIPALES DEL CODIGO:
 void loop()
 // Control de los pulsadores y contadores.
