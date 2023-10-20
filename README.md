@@ -9,7 +9,7 @@ y Juan Paredes
 
 ## Proyecto: Contador binario.
 Contador de 0 a 99 con Display 7 Segmentos y Multiplexación
-![Tinkercad](./img/ContadorBinario.jpg)
+![Tinkercad](./img/ContadorBinario.png)
 
 
 ## Descripción
