@@ -1,7 +1,7 @@
 // C++ code
 // Contador de 0 a 99 con Display 7 Segmentos y Multiplexación
 
-//Seteo de terminales
+//Seteo de pines y componentes
 #define B 13
 #define A 12
 #define F 11
@@ -17,8 +17,6 @@
 #define APAGADO 0
 #define TIMEDISPLAYDELAY 10
 
-#define CRONOMETRO 5
-
 //Declaracion de variables
 int contador=0;
 int arriba=1;
@@ -28,19 +26,13 @@ int abajoAnterior=1;
 int reseteo=1;
 int reseteoAnterior=1;
 
-int contadorcronometro=0;
-int cronometro=1;
-int cronometroAnterior=1;
-int flag_cronometro=0;
-
-//Configuracion de pines
+//Configuracion de pines, inicializamos componente
 void setup()
 {
 	pinMode(2, INPUT_PULLUP);
 	pinMode(3, INPUT_PULLUP );
 	pinMode(4, INPUT_PULLUP );
-  	pinMode(5, INPUT_PULLUP );
-	pinMode(7, OUTPUT);
+  	pinMode(7, OUTPUT);
 	pinMode(8, OUTPUT);
 	pinMode(9, OUTPUT);
 	pinMode(10, OUTPUT);
@@ -52,8 +44,9 @@ void setup()
 	digitalWrite(DISPLAYUNIDAD,0);
 	digitalWrite(DISPLAYDECENA,0);
 	ControladorDisplay(0);
+  	Serial.begin(9600);
+  	
 }
- 
 
 // Control de los pulsadores y contadores.
 // Recibe: Toma los datos de la funcion "ControladorPulsadores". Incrementara/disminuira/resetara contadores.
@@ -79,20 +72,12 @@ void loop()
       {
       contador=0; // reseteo de contador
       }
-  	else if(botonpresionado == CRONOMETRO)
-      {
-      delay(500);
-      contadorcronometro++;
-      if(contadorcronometro>99)
-        contadorcronometro=0;
-      flag_cronometro=1;
-      }
-  
+    
   	//MultiplexadoCronometro(contadorcronometro);
-	ControlUnidadDecena(contador);// Llamado de funcion, recibe como parametro el contador.
+	// Llamado de funcion, recibe como parametro el contador.
+	ControlUnidadDecena(contador);
+
 }
-
-
 // FUNCION CONTROL DE PULSADORES ------------------------------
 // Recibe: Lees el estado de los pulsadores
 // Devuelve: Identifica que pulsador se presiono, para ser procesados en el loop
@@ -101,16 +86,16 @@ int ControladorPulsadores(void)
 	arriba = digitalRead(ARRIBA); // Al iniciar arriba=1, (OFF), lee la entrada (read)si se presiona arriba=0(ON)
 	abajo = digitalRead(ABAJO); // Al iniciar abajo=1(OFF), si se presiona abajo=0(ON)
 	reseteo = digitalRead(RESETEO); // Al iniciar reseteo=1(OFF), si se presiona reseteo=0(ON)
-	cronometro = digitalRead(CRONOMETRO);
+	
   	
  	//Se registra estados anteriores para evitar que al presionar cuente de manera corrida
   	if (arriba==1)		// Control de Flags, Se guarda estado anterior de variable arriba "si no presiono SUBE"
     	arribaAnterior = 1; // Estado anterior, arribaAnterior=1 (OFF). Para controlar estado anterior
 	if (abajo)			
-    	abajoAnterior = 1; 
+    	abajoAnterior = 1;
+  	if (reseteo)
 		reseteoAnterior = 1;
-	if (cronometro)
-      	cronometroAnterior = 1;
+	
 	
   	// 	Analiza cual pulsador se presiono,y lo retorna.
     if (arriba==0 && arriba !=arribaAnterior)// Lectura de pulso del pulsador arriba=0
@@ -128,11 +113,7 @@ int ControladorPulsadores(void)
 				reseteoAnterior = reseteo;//se actualiza el flag reseteoAnterior=0
 				return (RESETEO);		// la funcion devuelve orden de RESETEO (ON)
         	}
-  	if(cronometro==0 && cronometro != cronometroAnterior)
-            {
-              	cronometroAnterior = cronometro;
-  				return CRONOMETRO;
-			}
+ 
 	     
     return 0; // Devuelve 0 cuando esta estatico.
 }
@@ -151,20 +132,14 @@ void ControlUnidadDecena(int contador)
 	ControladorMultiplexado(DISPLAYUNIDAD);//MULTIPLEXADO
 }
 
-void MultiplexadoCronometro(int contadorcronometro) 
-{
-	ControladorMultiplexado(APAGADO);
-	ControladorDisplay(contadorcronometro/10); 
-	ControladorMultiplexado(DISPLAYDECENA);
-  	ControladorMultiplexado(APAGADO);
-	ControladorDisplay(contadorcronometro - 10*((int)contadorcronometro/10)); //
-	ControladorMultiplexado(DISPLAYUNIDAD);
-}
 
-
-//FUNCION CONTROLADORA DE MULTIPLEXADO ---------------------------
-// Se encarga del multiplexado
-// Controla los tiempos de encendido de los display, alternando sus encendidos con un timepo de delay bajo para que sea imperceptible.
+//FUNCION CONTROLADORA DE MULTIPLEXADO ----------------------
+/* Se encarga del multiplexado
+Controla los tiempos de encendido de los display, 
+alternando sus encendidos con un tiempo de delay bajo
+para que sea imperceptible.
+RECIBE: Control. La recibe de ControlUnidadDecena
+DEVUELVE: Void*/
 void ControladorMultiplexado(int control) //MULTIPLEXADO
 {
 	if (control==DISPLAYUNIDAD)
@@ -291,5 +266,3 @@ void ControladorDisplay(int digit)
       }
   }
 }
-
-
